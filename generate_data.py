@@ -22,9 +22,14 @@ price_ranges = {
     'Sports': (20, 800)
 }
 
-products['price'] = products['category'].apply(
-    lambda category: np.round(np.random.uniform(*price_ranges[category]), 2)
-)
+prices = []
+
+for category in products['category']:
+    min_price, max_price = price_ranges[category]
+    price = round(np.random.uniform(min_price, max_price), 2)
+    prices.append(price)
+
+products['price'] = prices
 
 products['cost'] = np.round(
     products['price'] * np.random.uniform(0.4, 0.7, n_products),
@@ -42,7 +47,10 @@ dates = pd.date_range(start=start_date, periods=365, freq='D')
 sales_records = []
 
 for date in dates:
-    base_transactions = 80 if date.dayofweek >= 5 else 50
+    if date.dayofweek >= 5:
+        base_transactions = 80
+    else:
+        base_transactions = 50
 
     if date.month == 12:
         base_transactions = int(base_transactions * 1.5)
@@ -93,18 +101,18 @@ segment_params = {
     'Premium': {'avg_spend': (200, 1000), 'frequency': (10, 25)}
 }
 
-customers['avg_spend'] = customers['segment'].apply(
-    lambda segment: np.round(
-        np.random.uniform(*segment_params[segment]['avg_spend']),
-        2
-    )
-)
+avg_spends = []
+purchase_frequencies = []
 
-customers['purchase_frequency'] = customers['segment'].apply(
-    lambda segment: np.random.randint(
-        *segment_params[segment]['frequency']
-    )
-)
+for segment in customers['segment']:
+    min_spend, max_spend = segment_params[segment]['avg_spend']
+    avg_spends.append(round(np.random.uniform(min_spend, max_spend), 2))
+
+    min_freq, max_freq = segment_params[segment]['frequency']
+    purchase_frequencies.append(np.random.randint(min_freq, max_freq))
+
+customers['avg_spend'] = avg_spends
+customers['purchase_frequency'] = purchase_frequencies
 
 preferred_categories = {
     'Budget': ['Groceries', 'Clothing'],
@@ -112,17 +120,18 @@ preferred_categories = {
     'Premium': ['Electronics', 'Sports', 'Home & Garden']
 }
 
-customers['preferred_categories'] = customers['segment'].apply(
-    lambda segment: np.random.choice(
+customer_categories = []
+
+for segment in customers['segment']:
+    selected_categories = np.random.choice(
         preferred_categories[segment],
         size=np.random.randint(1, 3),
         replace=False
-    ).tolist()
-)
+    )
 
-customers['preferred_categories'] = customers['preferred_categories'].apply(
-    lambda categories: '|'.join(categories)
-)
+    customer_categories.append('|'.join(selected_categories))
+
+customers['preferred_categories'] = customer_categories
 
 products.to_csv('products.csv', index=False)
 sales.to_csv('sales.csv', index=False)

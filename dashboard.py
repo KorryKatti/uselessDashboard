@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
+
 # Page config
 st.set_page_config(page_title="NeuroRetail AI", layout="wide")
 st.title("NeuroRetail™ AI Dashboard")
@@ -29,6 +30,56 @@ sales, products, customers = load_data()
 # ============================================
 
 st.sidebar.header("Controls")
+
+# CSV Upload
+st.sidebar.subheader("📁 Upload Your Data")
+
+with st.sidebar.expander("CSV Format Help"):
+    st.markdown("""
+    **Sales CSV** must have these columns:
+    ```
+    date,product_id,units_sold,promotion_flag
+    2024-01-01,1057,4,0
+    ```
+    - `date`: YYYY-MM-DD format
+    - `product_id`: integer
+    - `units_sold`: integer
+    - `promotion_flag`: 0 or 1
+
+    **Products CSV** must have these columns:
+    ```
+    product_id,category,price,cost,stock_level,category_encoded
+    1000,Clothing,142.65,64.98,303,0
+    ```
+    - `category_encoded`: integer mapping of category name
+    """)
+
+uploaded_sales = st.sidebar.file_uploader("Upload Sales CSV", type=['csv'], key='sales_upload')
+uploaded_products = st.sidebar.file_uploader("Upload Products CSV", type=['csv'], key='products_upload')
+
+if uploaded_sales is not None:
+    try:
+        uploaded_df = pd.read_csv(uploaded_sales)
+        uploaded_df['date'] = pd.to_datetime(uploaded_df['date'])
+        st.sidebar.success(f"✅ Loaded {len(uploaded_df)} sales records")
+        # Store in session state for use throughout the app
+        st.session_state['uploaded_sales'] = uploaded_df
+    except Exception as e:
+        st.sidebar.error(f"Error reading CSV: {e}")
+
+if uploaded_products is not None:
+    try:
+        uploaded_products_df = pd.read_csv(uploaded_products)
+        st.sidebar.success(f"✅ Loaded {len(uploaded_products_df)} products")
+        st.session_state['uploaded_products'] = uploaded_products_df
+    except Exception as e:
+        st.sidebar.error(f"Error reading CSV: {e}")
+
+# Use uploaded data if available, otherwise use defaults
+if 'uploaded_sales' in st.session_state:
+    sales = st.session_state['uploaded_sales']
+if 'uploaded_products' in st.session_state:
+    products = st.session_state['uploaded_products']
 
 if st.sidebar.button("🔄 Retrain Model"):
     import subprocess

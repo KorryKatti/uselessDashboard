@@ -53,13 +53,22 @@ streamlit run main.py
 
 ---
 
+## Features
+
+### 📁 CSV Upload
+Upload your own sales and products CSV files directly from the dashboard sidebar. The data will automatically flow through all visualizations and forecasts.
+
+### 🔮 7-Day Forecast
+Get predictions for the next 7 days with daily breakdowns, revenue forecasts, and top product rankings.
+
 ## Roadmap to Exit
-- [ ] **Phase 1:** Synthetic Data Generation (Architecting Reality).
-- [ ] **Phase 2:** Preprocessing Pipeline (The "Data Cleaning" phase).
-- [ ] **Phase 3:** Regression + Classification Deployment (The "Math" phase).
-- [ ] **Phase 4:** Unsupervised Clustering (The "Bubbles on a Chart" phase).
-- [ ] **Phase 5:** Integrate the Self-Learning Loop (The "Sentience" phase).
-- [ ] **Phase 6:** Series A Funding / Caribbean Relocation.
+- [x] **Phase 1:** Synthetic Data Generation (Architecting Reality).
+- [x] **Phase 2:** Preprocessing Pipeline (The "Data Cleaning" phase).
+- [x] **Phase 3:** Regression + Classification Deployment (The "Math" phase).
+- [x] **Phase 4:** Unsupervised Clustering (The "Bubbles on a Chart" phase).
+- [x] **Phase 5:** Integrate the Self-Learning Loop (The "Sentience" phase).
+- [x] **Phase 6:** Series A Funding / Caribbean Relocation.
+- [x] **Phase 7:** CSV Upload + 7-Day Forecast (The "Real Product" phase).
 
 ---
 

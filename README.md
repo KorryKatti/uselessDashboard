@@ -53,13 +53,33 @@ streamlit run main.py
 
 ---
 
+## How to Use
+
+### First Run (with sample data)
+1. Train the model: `python pipeline_sales.py`
+2. Launch: `streamlit run dashboard.py`
+3. You'll see pre-loaded sample data across all panels
+
+### Upload Your Own Data
+1. Click the **Upload Sales CSV** and **Upload Products CSV** buttons in the sidebar
+2. Your data flows through all charts and tables automatically
+3. Click **Retrain Model** in the sidebar to retrain on your data
+
+### Reading the Dashboard
+- **Sales Forecast**: Actual vs predicted monthly sales. Green line = model, blue line = reality
+- **Product Performance**: Top/bottom products ranked by total units sold
+- **Customer Clusters**: PCA visualization of customer segments by spend and frequency
+- **Feature Importance**: What factors matter most (price, weekday, promotions, etc.)
+
+### CSV Format
+Expand the "CSV Format Help" section in the sidebar for exact column requirements.
+
+---
+
 ## Features
 
 ### 📁 CSV Upload
 Upload your own sales and products CSV files directly from the dashboard sidebar. The data will automatically flow through all visualizations and forecasts.
-
-### 🔮 7-Day Forecast
-Get predictions for the next 7 days with daily breakdowns, revenue forecasts, and top product rankings.
 
 ## Roadmap to Exit
 - [x] **Phase 1:** Synthetic Data Generation (Architecting Reality).
@@ -68,7 +88,6 @@ Get predictions for the next 7 days with daily breakdowns, revenue forecasts, an
 - [x] **Phase 4:** Unsupervised Clustering (The "Bubbles on a Chart" phase).
 - [x] **Phase 5:** Integrate the Self-Learning Loop (The "Sentience" phase).
 - [x] **Phase 6:** Series A Funding / Caribbean Relocation.
-- [x] **Phase 7:** CSV Upload + 7-Day Forecast (The "Real Product" phase).
 
 ---
 
